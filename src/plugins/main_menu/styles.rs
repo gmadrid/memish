@@ -27,6 +27,14 @@ pub fn button_style() -> Style {
     }
 }
 
+pub fn title_text_style(asset_server: &Res<AssetServer>) -> TextStyle {
+    TextStyle {
+        font: asset_server.load("fonts/FiraSans-Bold.ttf"),
+        font_size: 64.0,
+        color: Color::YELLOW,
+    }
+}
+
 pub fn get_button_text_style(asset_server: &Res<AssetServer>) -> TextStyle {
     TextStyle {
         font: asset_server.load("fonts/FiraSans-Bold.ttf"),

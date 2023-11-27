@@ -1,4 +1,4 @@
-use crate::main_menu::systems::*;
+use crate::plugins::main_menu::systems::*;
 use crate::AppState;
 use bevy::prelude::*;
 

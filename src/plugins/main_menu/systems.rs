@@ -1,6 +1,6 @@
-use crate::main_menu::layout::*;
-use crate::main_menu::styles::*;
-use crate::main_menu::*;
+use crate::plugins::main_menu::layout::*;
+use crate::plugins::main_menu::styles::*;
+use crate::plugins::main_menu::*;
 use bevy::app::AppExit;
 use bevy::prelude::*;
 
