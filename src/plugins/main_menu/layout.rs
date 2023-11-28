@@ -1,7 +1,6 @@
-use crate::plugins::main_menu::styles::{
-    button_style, get_button_text_style, main_menu_style, title_text_style, NORMAL_BUTTON_COLOR,
-};
+use crate::plugins::main_menu::styles::{get_button_text_style, main_menu_style, title_text_style};
 use crate::plugins::main_menu::{MainMenu, PlayButton, PrefsButton, QuitButton};
+use crate::plugins::{button_style, NORMAL_BUTTON_COLOR};
 use bevy::asset::AssetServer;
 use bevy::hierarchy::{BuildChildren, ChildBuilder};
 use bevy::prelude::{

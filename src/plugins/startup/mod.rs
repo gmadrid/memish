@@ -1,3 +1,4 @@
+use crate::prefs::Prefs;
 use crate::AppState;
 use bevy::core::FrameCount;
 use bevy::prelude::*;
@@ -7,6 +8,7 @@ use bevy::window::{EnabledButtons, WindowResolution};
 /// - the window
 /// - delayed visibility to avoid a white flash
 /// - the camera
+/// - a Prefs resource
 pub struct StartupPlugin;
 
 fn add_camera(mut commands: Commands) {
@@ -20,7 +22,8 @@ fn delayed_window(
 ) {
     if frames.0 == 3 {
         window.single_mut().visible = true;
-        next_state.set(AppState::MainMenu);
+        next_state.set(AppState::PrefsDialog);
+        //        next_state.set(AppState::MainMenu);
     }
 }
 
@@ -47,6 +50,7 @@ impl Plugin for StartupPlugin {
     fn build(&self, app: &mut App) {
         app.add_plugins(DefaultPlugins.set(app_window_plugin()))
             .add_systems(Startup, add_camera)
-            .add_systems(Update, delayed_window.run_if(in_state(AppState::NoWindow)));
+            .add_systems(Update, delayed_window.run_if(in_state(AppState::NoWindow)))
+            .init_resource::<Prefs>();
     }
 }

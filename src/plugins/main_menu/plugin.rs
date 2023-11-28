@@ -1,4 +1,6 @@
+use crate::plugins::despawn_entity;
 use crate::plugins::main_menu::systems::*;
+use crate::plugins::main_menu::MainMenu;
 use crate::AppState;
 use bevy::prelude::*;
 
@@ -16,6 +18,6 @@ impl Plugin for MainMenuPlugin {
                 )
                     .run_if(in_state(AppState::MainMenu)),
             )
-            .add_systems(OnExit(AppState::MainMenu), despawn_main_menu);
+            .add_systems(OnExit(AppState::MainMenu), despawn_entity::<MainMenu>);
     }
 }
