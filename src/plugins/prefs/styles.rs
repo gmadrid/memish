@@ -1,7 +1,6 @@
 use bevy::prelude::*;
 
 pub fn prefs_dialog_style() -> Style {
-    // TODO: This is common with main_menu_style
     Style {
         flex_direction: FlexDirection::Column,
         flex_wrap: FlexWrap::Wrap,

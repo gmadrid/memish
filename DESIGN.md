@@ -81,5 +81,3 @@ has a brief blurb and some game status information.
 A very simple menu. Just a title, and the three buttons, all in a centered 
 column on the screen. 
 
-> TODO: You need to pick some better colors here.
-

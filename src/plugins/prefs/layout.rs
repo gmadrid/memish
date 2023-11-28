@@ -90,7 +90,6 @@ fn layout_half_stack_checkbox(
     asset_server: &Res<AssetServer>,
     prefs: &Res<Prefs>,
 ) {
-    // TODO: a lot of repetition here
     layout_subbox(parent, |subbox| {
         layout_checkbox(subbox, "Half-stack", asset_server, prefs.half_stack);
     });
