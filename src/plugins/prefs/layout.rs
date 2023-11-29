@@ -1,8 +1,7 @@
 use crate::plugins::prefs::styles::*;
-use crate::plugins::prefs::{Checkbox, PrefsDialog};
+use crate::plugins::prefs::*;
 use crate::plugins::{button_style, NORMAL_BUTTON_COLOR};
 use crate::prefs::{NumQuestions, Prefs, StackChoice, TimeLimit};
-use bevy::prelude::*;
 
 pub fn build_prefs_dialog(
     commands: &mut Commands,
@@ -57,30 +56,35 @@ fn layout_stack_checkboxes(
             "Mnemonica",
             asset_server,
             prefs.stack == StackChoice::Mnemonica,
+            PrefSetter::Stack(StackChoice::Mnemonica),
         );
         layout_checkbox(
             subbox,
             "Memorandum",
             asset_server,
             prefs.stack == StackChoice::Memorandum,
+            PrefSetter::Stack(StackChoice::Memorandum),
         );
         layout_checkbox(
             subbox,
             "Aronson",
             asset_server,
             prefs.stack == StackChoice::Aronson,
+            PrefSetter::Stack(StackChoice::Aronson),
         );
         layout_checkbox(
             subbox,
             "Redford",
             asset_server,
             prefs.stack == StackChoice::Redford,
+            PrefSetter::Stack(StackChoice::Redford),
         );
         layout_checkbox(
             subbox,
             "Faro 5",
             asset_server,
             prefs.stack == StackChoice::Faro5,
+            PrefSetter::Stack(StackChoice::Faro5),
         );
     });
 }
@@ -91,7 +95,13 @@ fn layout_half_stack_checkbox(
     prefs: &Res<Prefs>,
 ) {
     layout_subbox(parent, |subbox| {
-        layout_checkbox(subbox, "Half-stack", asset_server, prefs.half_stack);
+        layout_checkbox(
+            subbox,
+            "Half-stack",
+            asset_server,
+            prefs.half_stack,
+            PrefSetter::HalfStack(!prefs.half_stack),
+        );
     });
 }
 
@@ -107,24 +117,40 @@ fn layout_question_type_selection(
             "Card to index",
             asset_server,
             prefs.question_types.card_to_index,
+            PrefSetter::QuestionType(
+                QuestionTypesField::CardToIndex,
+                !prefs.question_types.card_to_index,
+            ),
         );
         layout_checkbox(
             subbox,
             "Index to card",
             asset_server,
             prefs.question_types.index_to_card,
+            PrefSetter::QuestionType(
+                QuestionTypesField::IndexToCard,
+                !prefs.question_types.index_to_card,
+            ),
         );
         layout_checkbox(
             subbox,
             "Next card",
             asset_server,
             prefs.question_types.next_card,
+            PrefSetter::QuestionType(
+                QuestionTypesField::NextCard,
+                !prefs.question_types.next_card,
+            ),
         );
         layout_checkbox(
             subbox,
             "Previous card",
             asset_server,
             prefs.question_types.previous_card,
+            PrefSetter::QuestionType(
+                QuestionTypesField::PreviousCard,
+                !prefs.question_types.previous_card,
+            ),
         );
     });
 }
@@ -141,36 +167,42 @@ fn layout_time_limit_checkboxes(
             "No limit",
             asset_server,
             prefs.time_limit == TimeLimit::None,
+            PrefSetter::TimeLimit(TimeLimit::None),
         );
         layout_checkbox(
             subbox,
             "10 secs",
             asset_server,
             prefs.time_limit == TimeLimit::TenSeconds,
+            PrefSetter::TimeLimit(TimeLimit::TenSeconds),
         );
         layout_checkbox(
             subbox,
             "5 secs",
             asset_server,
             prefs.time_limit == TimeLimit::FiveSeconds,
+            PrefSetter::TimeLimit(TimeLimit::FiveSeconds),
         );
         layout_checkbox(
             subbox,
             "3 secs",
             asset_server,
             prefs.time_limit == TimeLimit::ThreeSeconds,
+            PrefSetter::TimeLimit(TimeLimit::ThreeSeconds),
         );
         layout_checkbox(
             subbox,
             "2 secs",
             asset_server,
             prefs.time_limit == TimeLimit::TwoSeconds,
+            PrefSetter::TimeLimit(TimeLimit::TwoSeconds),
         );
         layout_checkbox(
             subbox,
             "1 sec",
             asset_server,
             prefs.time_limit == TimeLimit::OneSecond,
+            PrefSetter::TimeLimit(TimeLimit::OneSecond),
         );
     });
 }
@@ -187,24 +219,28 @@ fn layout_max_questions_checkboxes(
             "40",
             asset_server,
             prefs.num_questions == NumQuestions::Forty,
+            PrefSetter::NumQuestions(NumQuestions::Forty),
         );
         layout_checkbox(
             subbox,
             "20",
             asset_server,
             prefs.num_questions == NumQuestions::Twenty,
+            PrefSetter::NumQuestions(NumQuestions::Twenty),
         );
         layout_checkbox(
             subbox,
             "10",
             asset_server,
             prefs.num_questions == NumQuestions::Ten,
+            PrefSetter::NumQuestions(NumQuestions::Ten),
         );
         layout_checkbox(
             subbox,
             "5",
             asset_server,
             prefs.num_questions == NumQuestions::Five,
+            PrefSetter::NumQuestions(NumQuestions::Five),
         );
     });
 }
@@ -225,6 +261,7 @@ pub fn layout_checkbox(
     label: &str,
     asset_server: &Res<AssetServer>,
     selected: bool,
+    pref_setter: PrefSetter,
 ) {
     parent
         .spawn((
@@ -242,6 +279,7 @@ pub fn layout_checkbox(
                 ..default()
             },
             Checkbox(selected),
+            pref_setter,
         ))
         .with_children(|parent| {
             parent.spawn(TextBundle {

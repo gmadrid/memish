@@ -19,6 +19,15 @@ pub enum StackChoice {
     Faro5,
 }
 
+// There are times in the UI where it's useful to pass a tag for a desired field
+#[derive(Copy, Clone, Debug)]
+pub enum QuestionTypesField {
+    CardToIndex,
+    IndexToCard,
+    NextCard,
+    PreviousCard,
+}
+
 #[derive(Clone, Debug)]
 pub struct QuestionTypes {
     pub card_to_index: bool,

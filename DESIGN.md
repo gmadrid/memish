@@ -81,3 +81,25 @@ has a brief blurb and some game status information.
 A very simple menu. Just a title, and the three buttons, all in a centered 
 column on the screen. 
 
+## Button state
+
+My current strategy is not working. :(  It's _almost_ working, but it's not working. I'm trying a new plan based on
+a ButtonState component and an UpdateButtonState event stream.
+
+ButtonState stores:
+- Selected
+- Hovered
+- Ghosted
+
+So, no longer set any colors while initializing. 
+
+The Interaction system should send Events to change the ButtonState. 
+
+UpdateButtonState contains:
+- Entity
+- Change
+  - selected(val)
+  - hovered(val)
+  - ghosted(val)
+
+This means that only one can change at a time, but that's probably okay.
