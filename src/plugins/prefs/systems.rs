@@ -5,6 +5,7 @@ use crate::plugins::{
     SELECTED_HOVERED_BUTTON_COLOR,
 };
 use crate::prefs::Prefs;
+use crate::AppState;
 
 pub fn spawn_prefs_dialog(
     mut commands: Commands,
@@ -26,7 +27,11 @@ pub fn interact_with_basic_button(
     }
 }
 
-pub fn read_pref_setter_events(mut events: EventReader<PrefSetterEvent>, mut prefs: ResMut<Prefs>) {
+pub fn read_pref_setter_events(
+    mut events: EventReader<PrefSetterEvent>,
+    mut prefs: ResMut<Prefs>,
+    mut app_state_next_state: ResMut<NextState<AppState>>,
+) {
     for PrefSetterEvent(setter) in events.read() {
         match *setter {
             PrefSetter::Stack(val) => prefs.stack = val,
@@ -47,6 +52,15 @@ pub fn read_pref_setter_events(mut events: EventReader<PrefSetterEvent>, mut pre
             },
             PrefSetter::TimeLimit(val) => prefs.time_limit = val,
             PrefSetter::NumQuestions(val) => prefs.num_questions = val,
+            // TODO: let's consider putting a `Prefs` in a Component to act as a 'temp' space
+            // for editting it. Then, this would get copied to the global prefs on Save,
+            // (and just left to die on Cancel).
+            // TODO: actually _save_ the `Prefs` somewhere.
+            // TODO: let the `esc` key cancel and the `enter` key save.
+            // TODO: you should probably have a confirm dialog before leaving.
+            // TODO: show a confirmation for any change that will erase the current state.
+            PrefSetter::CancelDialog => app_state_next_state.set(AppState::MainMenu),
+            PrefSetter::SavePrefs => app_state_next_state.set(AppState::MainMenu),
         }
     }
 }
@@ -119,6 +133,7 @@ pub fn recompute_selected(
                     }
                 }
             }
+            PrefSetter::SavePrefs | PrefSetter::CancelDialog => { /* ignore */ }
         }
     }
     *old_prefs = Some(new_prefs.clone());

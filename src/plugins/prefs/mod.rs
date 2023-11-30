@@ -21,6 +21,7 @@ struct CheckboxState {
     pub selected: bool,
 }
 
+// TODO: rename or restructure this because it's now used for more than just pref-setting.
 #[derive(Component, Debug, Clone)]
 enum PrefSetter {
     // Selections
@@ -31,6 +32,10 @@ enum PrefSetter {
     // Toggles
     HalfStack,
     QuestionType(QuestionTypesField),
+
+    // Actions
+    CancelDialog,
+    SavePrefs,
 }
 
 #[derive(Event)]

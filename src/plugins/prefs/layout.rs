@@ -31,17 +31,53 @@ fn layout_container(
             layout_question_type_selection(parent, asset_server, prefs);
             layout_time_limit_checkboxes(parent, asset_server, prefs);
             layout_max_questions_checkboxes(parent, asset_server, prefs);
+            layout_cancel_save_buttons(parent, asset_server, prefs);
         })
         .id()
 }
 
 fn layout_subbox(parent: &mut ChildBuilder, children: impl FnOnce(&mut ChildBuilder)) {
+    layout_subbox_with_style(parent, prefs_subbox_style, children)
+}
+
+fn layout_subbox_with_style(
+    parent: &mut ChildBuilder,
+    style_fn: impl FnOnce() -> Style,
+    children: impl FnOnce(&mut ChildBuilder),
+) {
     parent
         .spawn(NodeBundle {
-            style: prefs_subbox_style(),
+            style: style_fn(),
             ..default()
         })
         .with_children(children);
+}
+
+fn layout_cancel_save_buttons(
+    parent: &mut ChildBuilder,
+    asset_server: &Res<AssetServer>,
+    prefs: &Res<Prefs>,
+) {
+    layout_subbox_with_style(
+        parent,
+        || Style {
+            flex_direction: FlexDirection::Row,
+            position_type: PositionType::Absolute,
+            right: Val::Px(25.0),
+            bottom: Val::Px(25.0),
+            ..prefs_subbox_style()
+        },
+        |subbox| {
+            layout_checkbox(
+                subbox,
+                "Cancel",
+                asset_server,
+                false,
+                PrefSetter::CancelDialog,
+            );
+            layout_checkbox(subbox, "Save", asset_server, false, PrefSetter::SavePrefs);
+        },
+    );
 }
 
 fn layout_stack_checkboxes(
