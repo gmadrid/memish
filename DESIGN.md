@@ -81,25 +81,24 @@ has a brief blurb and some game status information.
 A very simple menu. Just a title, and the three buttons, all in a centered 
 column on the screen. 
 
+## Prefs update
+
+Every 'checkbox' will change some state in the Prefs. The change is indicated by the PrefSetter 
+component which is baked into the UI. The state changes are either:
+- a toggle
+- a selection
+The PrefSetter is constant.
+
 ## Button state
 
-My current strategy is not working. :(  It's _almost_ working, but it's not working. I'm trying a new plan based on
-a ButtonState component and an UpdateButtonState event stream.
+Button state is affected by two things: mouse movement (Interactions) which changes `hovered` and `pressed` 
+and prefs changes which can changed `selected`.
 
-ButtonState stores:
-- Selected
-- Hovered
-- Ghosted
+`interact_with_buttons` will 1) make changes to `hovered` or `pressed`, and 2) can send PrefSetterEvents. 
 
-So, no longer set any colors while initializing. 
+`read_pref_setter_events` will receive the events, and set fields in the Prefs resource.
 
-The Interaction system should send Events to change the ButtonState. 
+`recompute_selected` will iterate the buttons and update their ButtonState `selected` fields.
 
-UpdateButtonState contains:
-- Entity
-- Change
-  - selected(val)
-  - hovered(val)
-  - ghosted(val)
+`update_checkbox_display` will watch for changed ButtonState and update the display as necessary.
 
-This means that only one can change at a time, but that's probably okay.

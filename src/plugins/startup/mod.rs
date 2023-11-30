@@ -22,8 +22,8 @@ fn delayed_window(
 ) {
     if frames.0 == 3 {
         window.single_mut().visible = true;
-        next_state.set(AppState::PrefsDialog);
-        //        next_state.set(AppState::MainMenu);
+        //next_state.set(AppState::PrefsDialog);
+        next_state.set(AppState::MainMenu);
     }
 }
 

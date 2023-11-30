@@ -100,7 +100,7 @@ fn layout_half_stack_checkbox(
             "Half-stack",
             asset_server,
             prefs.half_stack,
-            PrefSetter::HalfStack(!prefs.half_stack),
+            PrefSetter::HalfStack,
         );
     });
 }
@@ -117,40 +117,28 @@ fn layout_question_type_selection(
             "Card to index",
             asset_server,
             prefs.question_types.card_to_index,
-            PrefSetter::QuestionType(
-                QuestionTypesField::CardToIndex,
-                !prefs.question_types.card_to_index,
-            ),
+            PrefSetter::QuestionType(QuestionTypesField::CardToIndex),
         );
         layout_checkbox(
             subbox,
             "Index to card",
             asset_server,
             prefs.question_types.index_to_card,
-            PrefSetter::QuestionType(
-                QuestionTypesField::IndexToCard,
-                !prefs.question_types.index_to_card,
-            ),
+            PrefSetter::QuestionType(QuestionTypesField::IndexToCard),
         );
         layout_checkbox(
             subbox,
             "Next card",
             asset_server,
             prefs.question_types.next_card,
-            PrefSetter::QuestionType(
-                QuestionTypesField::NextCard,
-                !prefs.question_types.next_card,
-            ),
+            PrefSetter::QuestionType(QuestionTypesField::NextCard),
         );
         layout_checkbox(
             subbox,
             "Previous card",
             asset_server,
             prefs.question_types.previous_card,
-            PrefSetter::QuestionType(
-                QuestionTypesField::PreviousCard,
-                !prefs.question_types.previous_card,
-            ),
+            PrefSetter::QuestionType(QuestionTypesField::PreviousCard),
         );
     });
 }
@@ -278,8 +266,9 @@ pub fn layout_checkbox(
                 },
                 ..default()
             },
-            Checkbox(selected),
+            Checkbox,
             pref_setter,
+            CheckboxState::default(),
         ))
         .with_children(|parent| {
             parent.spawn(TextBundle {

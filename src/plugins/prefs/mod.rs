@@ -13,22 +13,24 @@ struct PrefsDialog;
 
 // The Checkbox value is `true` if the Checkbox is selected
 #[derive(Component)]
-struct Checkbox(bool);
+struct Checkbox;
 
-#[derive(Component)]
-struct ButtonState {
+#[derive(Component, Default, Eq, PartialEq, Clone, Copy)]
+struct CheckboxState {
+    pub interaction: Interaction,
     pub selected: bool,
-    pub hovered: bool,
-    pub ghosted: bool,
 }
 
 #[derive(Component, Debug, Clone)]
 enum PrefSetter {
+    // Selections
     Stack(StackChoice),
-    HalfStack(bool),
-    QuestionType(QuestionTypesField, bool),
     TimeLimit(TimeLimit),
     NumQuestions(NumQuestions),
+
+    // Toggles
+    HalfStack,
+    QuestionType(QuestionTypesField),
 }
 
 #[derive(Event)]

@@ -28,7 +28,7 @@ pub enum QuestionTypesField {
     PreviousCard,
 }
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Eq, PartialEq)]
 pub struct QuestionTypes {
     pub card_to_index: bool,
     pub index_to_card: bool,
