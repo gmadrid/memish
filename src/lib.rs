@@ -14,6 +14,6 @@ pub enum AppState {
 
     // The main menu. This is displayed with the game starts after the window is displayed.
     MainMenu,
-
+    Play,
     PrefsDialog,
 }

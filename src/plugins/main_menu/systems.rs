@@ -14,10 +14,14 @@ pub fn interact_with_play_button(
         (&Interaction, &mut BackgroundColor),
         (Changed<Interaction>, With<PlayButton>),
     >,
+    mut app_state_next_state: ResMut<NextState<AppState>>,
 ) {
     // TODO: it would be nice to move all of this matching and querying to the common function.
     if let Ok((interaction, mut background_color)) = button_query.get_single_mut() {
         plugins::interact_with_button(interaction, &mut background_color, false);
+        if *interaction == Interaction::Pressed {
+            app_state_next_state.set(AppState::Play);
+        }
     }
 }
 

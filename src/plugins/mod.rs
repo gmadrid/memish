@@ -1,6 +1,7 @@
 use bevy::prelude::*;
 
 pub mod main_menu;
+pub mod play;
 pub mod prefs;
 pub mod startup;
 

@@ -57,6 +57,7 @@ pub fn recompute_selected(
     mut query: Query<(&PrefSetter, &mut CheckboxState)>,
 ) {
     // TODO: add dirty bit to prefs so we can skip this absent a change.
+    //   OR: consider moving Prefs to a unique Component so we can do Change detection.
     for (setter, mut checkbox_state) in query.iter_mut() {
         match setter {
             PrefSetter::Stack(setter_stack) => {
