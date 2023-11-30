@@ -53,8 +53,8 @@ pub fn read_pref_setter_events(
             PrefSetter::TimeLimit(val) => prefs.time_limit = val,
             PrefSetter::NumQuestions(val) => prefs.num_questions = val,
             // TODO: let's consider putting a `Prefs` in a Component to act as a 'temp' space
-            // for editting it. Then, this would get copied to the global prefs on Save,
-            // (and just left to die on Cancel).
+            //     for editting it. Then, this would get copied to the global prefs on Save,
+            //     (and just left to die on Cancel).
             // TODO: actually _save_ the `Prefs` somewhere.
             // TODO: let the `esc` key cancel and the `enter` key save.
             // TODO: you should probably have a confirm dialog before leaving.
